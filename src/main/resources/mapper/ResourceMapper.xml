@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.mapper.UserMapper">
+
+    <sql id="Base_Column_List">
+        userId,
+        userName,
+        password,
+        phone,
+    </sql>
+    <sql id="Example_Where_Clause">
+        <where>
+            <trim prefix="(" prefixOverrides="and" suffix=")">
+                <if test="userId != null">
+                    AND userId = #{userId}
+                </if>
+                <if test="userName != null">
+                    and userName = #{userName}
+                </if>
+                <if test="password != null">
+                    and password = #{password}
+                </if>
+                <if test="phone != null">
+                    and phone = #{phone}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <!-- 获取资源信息 -->
+    <select id="querUser"  parameterType="com.cc.pojo.UserQuery" flushCache="false"
+            resultType="com.cc.pojo.User">
+      SELECT
+        <trim suffixOverrides=",">
+            <include refid="Base_Column_List"/>
+        </trim>
+        FROM t_user
+        <include refid="Example_Where_Clause"/>
+    </select>
+</mapper>
